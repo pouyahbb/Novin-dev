@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 // Other
 import { withRouter } from 'react-router-dom'
-import UserList from './../UserList/UserList'
+import UserList from '../../components/UserList/UserList'
 import styled from 'styled-components'
 
 const useStyle = makeStyles({

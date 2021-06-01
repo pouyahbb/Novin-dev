@@ -1,7 +1,7 @@
 import React from 'react'
 // Other
 import { connect } from 'react-redux'
-import Card from './../lib/Card'
+import Card from '../../components/Card/Card'
 import styled from 'styled-components'
 
 const Root = styled.div`

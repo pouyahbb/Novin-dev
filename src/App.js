@@ -18,10 +18,10 @@ import {
 import { Provider } from 'react-redux'
 import store from './redux/store'
 // Other
-import Home from './components/Home/Home'
+import Home from './pages/Home/Home'
 import NavBar from './components/Navbar'
-import Auth from './components/Auth/Auth'
-import UserDetail from './components/UserDetail/UserDetail'
+import Auth from './pages/Auth/Auth'
+import UserDetail from './pages/UserDetail/UserDetail'
 
 export const App = () => {
 	return (

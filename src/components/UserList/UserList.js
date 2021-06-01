@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { userDetail } from './../../redux/actions/index'
-import CardComponent from './../lib/Card'
+import CardComponent from '../Card/Card'
 
 const Root = styled.div`
 	margin-top: 5rem;
