@@ -24,6 +24,17 @@ import Auth from './pages/Auth/Auth'
 import UserDetail from './pages/UserDetail/UserDetail'
 
 export const App = () => {
+	const ProtectedRoutes = (component) => {
+		return localStorage.getItem('token') !== '' ? (
+			<Route
+				path={component.path}
+				exact={component.exact}
+				component={component.component}
+			/>
+		) : (
+			<Redirect to='/login' />
+		)
+	}
 	return (
 		<StylesProvider injectFirst>
 			<MuiThemeProvider theme={muiTheme}>
@@ -35,7 +46,11 @@ export const App = () => {
 							<Switch>
 								<Route exact path='/' component={Home} />
 								<Route exact path='/login' component={Auth} />
-								<Route exact path='/:id/detail' component={UserDetail} />
+								<ProtectedRoutes
+									path={`/:id/detail`}
+									exact
+									component={UserDetail}
+								/>
 								<Redirect to='/' />
 							</Switch>
 						</Router>
