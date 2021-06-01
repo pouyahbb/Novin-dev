@@ -24,6 +24,7 @@ import Auth from './pages/Auth/Auth'
 import UserDetail from './pages/UserDetail/UserDetail'
 
 export const App = () => {
+	// Route restrict
 	const ProtectedRoutes = (component) => {
 		return localStorage.getItem('token') !== '' ? (
 			<Route
