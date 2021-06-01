@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
 // Other
-import axios from 'axios'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { userDetail } from './../../redux/actions/index'
 import CardComponent from '../Card/Card'
+import makeRequest from './../../lib/axios'
+import { Typography } from '@material-ui/core'
 
 const Root = styled.div`
 	margin-top: 5rem;
@@ -29,7 +30,7 @@ export const UserList = ({ history, userDetail }) => {
 				loading: true,
 			}
 		})
-		axios
+		makeRequest
 			.get(`https://reqres.in/api/users/${user.id}`)
 			.then(({ data }) => {
 				setValues((prevState) => {
@@ -57,7 +58,7 @@ export const UserList = ({ history, userDetail }) => {
 				loading: true,
 			}
 		})
-		axios
+		makeRequest
 			.get('https://reqres.in/api/users?page=2')
 			.then(({ data }) => {
 				setValues((prevState) => {

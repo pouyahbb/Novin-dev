@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 // Other
 import Fields from './components/Fields'
-import axios from 'axios'
+import makeRequest from './../../lib/axios'
 import { withRouter } from 'react-router-dom'
 
 export const Auth = ({ history }) => {
@@ -37,7 +37,7 @@ export const Auth = ({ history }) => {
 				loading: true,
 			}
 		})
-		axios
+		makeRequest
 			.post('https://reqres.in/api/login', {
 				email: values.email,
 				password: values.password,
