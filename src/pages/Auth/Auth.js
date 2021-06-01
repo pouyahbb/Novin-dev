@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 // Other
-import Fields from './components/Fields'
+import Fields from './../../components/Fields/Fields'
 import makeRequest from './../../lib/axios'
 import { withRouter } from 'react-router-dom'
 
