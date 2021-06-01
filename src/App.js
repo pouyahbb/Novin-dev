@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 // Materail
-import muiTheme from './theme'
+import { lightTheme, darkTheme } from './theme'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider as SCThemeProvider } from 'styled-components'
 import {
@@ -15,7 +15,7 @@ import {
 	Redirect,
 } from 'react-router-dom'
 // Setup redux
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 import store from './redux/store'
 // Other
 import Home from './pages/Home/Home'
@@ -23,7 +23,21 @@ import NavBar from './components/Navbar'
 import Auth from './pages/Auth/Auth'
 import UserDetail from './pages/UserDetail/UserDetail'
 
+const Provider = ({ darkMode, children }) => {
+	return (
+		<StylesProvider injectFirst>
+			<MuiThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+				<SCThemeProvider theme={lightTheme}>
+					<CssBaseline />
+					<ReduxProvider store={store}>{children}</ReduxProvider>
+				</SCThemeProvider>
+			</MuiThemeProvider>
+		</StylesProvider>
+	)
+}
+
 export const App = () => {
+	const [darkMode, setDarkMode] = useState(false)
 	// Route restrict
 	const ProtectedRoutes = (component) => {
 		return localStorage.getItem('token') !== '' ? (
@@ -36,29 +50,23 @@ export const App = () => {
 			<Redirect to='/login' />
 		)
 	}
+
 	return (
-		<StylesProvider injectFirst>
-			<MuiThemeProvider theme={muiTheme}>
-				<SCThemeProvider theme={muiTheme}>
-					<CssBaseline />
-					<Provider store={store}>
-						<Router>
-							<NavBar />
-							<Switch>
-								<Route exact path='/' component={Home} />
-								<Route exact path='/login' component={Auth} />
-								<ProtectedRoutes
-									path={`/:id/detail`}
-									exact
-									component={UserDetail}
-								/>
-								<Redirect to='/' />
-							</Switch>
-						</Router>
-					</Provider>
-				</SCThemeProvider>
-			</MuiThemeProvider>
-		</StylesProvider>
+		<Provider darkMode={darkMode}>
+			<Router>
+				<NavBar darkMode={darkMode} setDarkMode={setDarkMode} />
+				<Switch>
+					<Route exact path='/' component={Home} />
+					<Route exact path='/login' component={Auth} />
+					<ProtectedRoutes
+						path={`/:id/detail`}
+						exact
+						component={() => <UserDetail darkMode={darkMode} />}
+					/>
+					<Redirect to='/' />
+				</Switch>
+			</Router>
+		</Provider>
 	)
 }
 

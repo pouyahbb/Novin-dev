@@ -7,14 +7,15 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import WbSunnyIcon from '@material-ui/icons/WbSunny'
+import Brightness2Icon from '@material-ui/icons/Brightness2'
 import IconButton from '@material-ui/core/IconButton'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 // Other
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
 // Style
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	root: {
 		flexGrow: 1,
 		background: '#1976d2',
@@ -27,6 +28,11 @@ const useStyles = makeStyles((theme) => ({
 	loginIcon: {
 		marginRight: '.5rem',
 	},
+	darkModeButton: {
+		marginLeft: '.5rem',
+		transform: 'rotate(40deg)',
+		color: '#eaeaea',
+	},
 }))
 const ToolBar = styled.div`
 	display: flex;
@@ -38,7 +44,7 @@ const ToolBarLeft = styled.div`
 	display: flex;
 	align-items: center;
 `
-export const NavBar = ({ history, user }) => {
+export const NavBar = ({ history, darkMode, setDarkMode }) => {
 	const classes = useStyles()
 	const handleBack = () => {
 		history.goBack()
@@ -50,6 +56,10 @@ export const NavBar = ({ history, user }) => {
 			localStorage.setItem('token', '')
 			history.push('/')
 		}
+	}
+	const handleDarkMode = (e) => {
+		e.preventDefault()
+		setDarkMode(!darkMode)
 	}
 	return (
 		<div className={classes.root}>
@@ -85,6 +95,18 @@ export const NavBar = ({ history, user }) => {
 								)}
 								{localStorage.getItem('token') === '' ? 'Login' : 'Logout'}
 							</Button>
+							<IconButton
+								aria-label='delete'
+								size='medium'
+								onClick={handleDarkMode}
+								className={classes.darkModeButton}
+							>
+								{darkMode ? (
+									<WbSunnyIcon fontSize='inherit' />
+								) : (
+									<Brightness2Icon />
+								)}
+							</IconButton>
 						</div>
 					</ToolBar>
 				</Toolbar>
@@ -93,8 +115,4 @@ export const NavBar = ({ history, user }) => {
 	)
 }
 
-const mapStateToProps = (state) => {
-	return { user: state.userDetail.userDetail }
-}
-
-export default connect(mapStateToProps)(withRouter(NavBar))
+export default withRouter(NavBar)
